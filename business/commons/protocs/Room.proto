@@ -1,0 +1,69 @@
+syntax="proto3";
+
+package protocs;
+
+option go_package="business/commons/pb";
+
+message Room{
+    uint64 id=1;
+    string roomName=2;
+    string addres=3;
+    string city=4;
+    string province=5;
+    string descriptions=6;
+    string owner=7;
+    uint32 type=8;
+    string createdAt=9;
+    string updatedAt=10;
+
+}
+
+message CreateRoomRequest{
+    Room room=1;
+}
+
+message CreateRoomResponse{
+    Room room=1;
+}
+
+message FindAllRoomRequest{
+
+}
+
+message FindAllRoomResponse{
+    Room room=1;
+}
+
+message FindRoomByIDRequest{
+    uint64 room_id=1;
+}
+
+message FindRoomByIDResponse{
+    Room room=1;
+}
+
+message UpdateRoomByIDRequest{
+    uint64 room_id=1;
+}
+
+message UpdateRoomByIDResponse{
+    Room room=1;
+}
+
+message DeleteRoomRequest{
+    uint64 room_id=1;
+}
+
+message DeleteRoomResponse{
+    Room room=1;
+}
+
+
+service roomService{
+    rpc SaveRoom(CreateRoomRequest) returns(CreateRoomResponse){}
+    rpc FindAllRoom(FindAllRoomRequest) returns (stream FindAllRoomResponse){}
+    rpc FindRoomByID(FindRoomByIDRequest) returns (FindRoomByIDResponse){} 
+    rpc UpdateRoomByID(UpdateRoomByIDRequest) returns (UpdateRoomByIDResponse){}
+    rpc DeleteRoom (DeleteRoomRequest) returns (DeleteRoomResponse){}
+    
+}
