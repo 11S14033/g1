@@ -98,7 +98,7 @@ func (r *Room) FindRoomByID(db *gorm.DB, rid uint64) (*Room, error) {
 	return r, nil
 }
 
-func (r *Room) UpdatePost(db *gorm.DB, rid int64) (*Room, error) {
+func (r *Room) UpdateRoom(db *gorm.DB, rid int64) (*Room, error) {
 	var err error
 
 	//attribute to be update
@@ -119,7 +119,7 @@ func (r *Room) UpdatePost(db *gorm.DB, rid int64) (*Room, error) {
 
 	return r, nil
 }
-func (r *Room) DeletePost(db *gorm.DB, rid uint64) (int64, error) {
+func (r *Room) DeleteRoom(db *gorm.DB, rid uint64) (int64, error) {
 	var err error
 
 	//gorm delete
