@@ -15,7 +15,7 @@ gen_room_swagger:
 	-I${GOPATH}/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
 	-I${GOPATH}/src/github.com/grpc-ecosystem/grpc-gateway \
 	--grpc-gateway_out=logtostderr=true:pb \
-	--swagger_out=allow_merge=true,merge_file_name=greetapi:./swagger \
+	--swagger_out=allow_merge=true,merge_file_name=roomapi:./swagger \
 	--go_out=plugins=grpc:pkg services/room/commons/protocs/Room.proto
 
 
