@@ -2,6 +2,8 @@ syntax="proto3";
 
 package protocs;
 
+import "google/api/annotations.proto";
+
 option go_package="services/room/commons/pb";
 
 message Room{
@@ -60,11 +62,31 @@ message DeleteRoomResponse{
 
 
 service roomService{
-    rpc SaveRoom(CreateRoomRequest) returns(CreateRoomResponse){};
-    rpc GetRooms(GetRoomsRequest) returns (stream GetRoomsResponse){};
-    rpc GetRoomByID(GetRoomByIDRequest) returns (GetRoomByIDResponse){} ;
-    rpc UpdateRoomByID(UpdateRoomByIDRequest) returns (UpdateRoomByIDResponse){};
-    rpc DeleteRoom (DeleteRoomRequest) returns (DeleteRoomResponse){};
-    
-    
+    rpc SaveRoom(CreateRoomRequest) returns(CreateRoomResponse){
+        option (google.api.http)={
+            post:"/v1/room"
+           
+        };
+    };
+    rpc GetRooms(GetRoomsRequest) returns (stream GetRoomsResponse){
+        option (google.api.http)={
+            get:"/v1/rooms"
+        };
+    };
+    rpc GetRoomByID(GetRoomByIDRequest) returns (GetRoomByIDResponse){
+        option (google.api.http)={
+            get:"/v1/room/{room_id}"
+        };
+    } ;
+    rpc UpdateRoomByID(UpdateRoomByIDRequest) returns (UpdateRoomByIDResponse){
+        option (google.api.http)={
+            put:"/v1/room"
+            body:"*"
+        };
+    };
+    rpc DeleteRoom (DeleteRoomRequest) returns (DeleteRoomResponse){
+        option (google.api.http)={
+            delete:"/v1/room/{room_id}"
+        };
+    };
 }
