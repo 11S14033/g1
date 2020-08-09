@@ -1,0 +1,262 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "services/room/commons/protocs/Room.proto",
+    "version": "version not set"
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/room": {
+      "post": {
+        "operationId": "SaveRoom",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/protocsCreateRoomResponse"
+            }
+          }
+        },
+        "tags": [
+          "roomService"
+        ]
+      },
+      "put": {
+        "operationId": "UpdateRoomByID",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/protocsUpdateRoomByIDResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/protocsUpdateRoomByIDRequest"
+            }
+          }
+        ],
+        "tags": [
+          "roomService"
+        ]
+      }
+    },
+    "/v1/room/{room_id}": {
+      "get": {
+        "operationId": "GetRoomByID",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/protocsGetRoomByIDResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "room_id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uint64"
+          }
+        ],
+        "tags": [
+          "roomService"
+        ]
+      },
+      "delete": {
+        "operationId": "DeleteRoom",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/protocsDeleteRoomResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "room_id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uint64"
+          }
+        ],
+        "tags": [
+          "roomService"
+        ]
+      }
+    },
+    "/v1/rooms": {
+      "get": {
+        "operationId": "GetRooms",
+        "responses": {
+          "200": {
+            "description": "A successful response.(streaming responses)",
+            "schema": {
+              "$ref": "#/x-stream-definitions/protocsGetRoomsResponse"
+            }
+          }
+        },
+        "tags": [
+          "roomService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "type_url": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "protocsCreateRoomResponse": {
+      "type": "object",
+      "properties": {
+        "room": {
+          "$ref": "#/definitions/protocsRoom"
+        }
+      }
+    },
+    "protocsDeleteRoomResponse": {
+      "type": "object",
+      "properties": {
+        "room_id": {
+          "type": "string",
+          "format": "uint64"
+        }
+      }
+    },
+    "protocsGetRoomByIDResponse": {
+      "type": "object",
+      "properties": {
+        "room": {
+          "$ref": "#/definitions/protocsRoom"
+        }
+      }
+    },
+    "protocsGetRoomsResponse": {
+      "type": "object",
+      "properties": {
+        "room": {
+          "$ref": "#/definitions/protocsRoom"
+        }
+      }
+    },
+    "protocsRoom": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "roomName": {
+          "type": "string"
+        },
+        "addres": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "province": {
+          "type": "string"
+        },
+        "descriptions": {
+          "type": "string"
+        },
+        "owner": {
+          "type": "string"
+        },
+        "type": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        }
+      }
+    },
+    "protocsUpdateRoomByIDRequest": {
+      "type": "object",
+      "properties": {
+        "room": {
+          "$ref": "#/definitions/protocsRoom"
+        }
+      }
+    },
+    "protocsUpdateRoomByIDResponse": {
+      "type": "object",
+      "properties": {
+        "room": {
+          "$ref": "#/definitions/protocsRoom"
+        }
+      }
+    },
+    "runtimeStreamError": {
+      "type": "object",
+      "properties": {
+        "grpc_code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "http_code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "http_status": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    }
+  },
+  "x-stream-definitions": {
+    "protocsGetRoomsResponse": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/protocsGetRoomsResponse"
+        },
+        "error": {
+          "$ref": "#/definitions/runtimeStreamError"
+        }
+      },
+      "title": "Stream result of protocsGetRoomsResponse"
+    }
+  }
+}
