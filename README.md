@@ -4,16 +4,17 @@
 This is a fun project to imporove my knowledge about GRPC.
 
 
-## Prerequisites
+## 
 * Golang
 * Using GRPC
 * Using GRPC Gateway
 * Using Gorm
 
 
-## Running App
+## Prerequisites
 * See Makefile to:
-** Generate [filename].pb.go and [filename].pb.gw.go from proto file
+
+### Generate [filename].pb.go and [filename].pb.gw.go from proto file
 ```
 gen_room_pb:
 	protoc \
@@ -29,7 +30,7 @@ To generate file:
 make gen_room_pb
 ```
 
-** Generate swagger file for documentation API.
+###  Generate swagger file for documentation API.
 ```
 gen_room_swagger:
 	protoc \
@@ -45,8 +46,8 @@ To generate file:
 ```
 make gen_room_swagger
 ```
-
-** Running GRPC server
+## Running App
+### Running GRPC server
 ```
 start_room_grpc_server:
 	go run services/room/*.go -port 50051 -mode cli
@@ -56,7 +57,7 @@ To generate file:
 make start_room_grpc_server
 ```
 
-** Running GRPC gateway
+### Running GRPC gateway
 ```
 start_room_grpc_gateway:
 	go run services/room/*.go -port 8080 -mode grpc_gateway -grpcAddress 50051
