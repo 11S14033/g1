@@ -1,10 +1,7 @@
 # G1
 
 ## Description
-This is a fun project to imporove my knowledge about GRPC.
-
-
-## 
+This is a fun project to imporove my knowledge about GRPC. Here component in this project:
 * Golang
 * Using GRPC
 * Using GRPC Gateway
@@ -12,9 +9,9 @@ This is a fun project to imporove my knowledge about GRPC.
 
 
 ## Prerequisites
-* See Makefile to:
+See Makefile to:
 
-### Generate [filename].pb.go and [filename].pb.gw.go from proto file
+### Generate [filename].pb.go and [filename].pb.gw.go From Proto File
 ```
 gen_room_pb:
 	protoc \
@@ -30,7 +27,7 @@ To generate file:
 make gen_room_pb
 ```
 
-###  Generate swagger file for documentation API.
+###  Generate Swagger File For Documentation API.
 ```
 gen_room_swagger:
 	protoc \
@@ -47,7 +44,7 @@ To generate file:
 make gen_room_swagger
 ```
 ## Running App
-### Running GRPC server
+### First: Running GRPC server
 ```
 start_room_grpc_server:
 	go run services/room/*.go -port 50051 -mode cli
