@@ -3,18 +3,14 @@
 ## Description
 This is a fun project to imporove my knowledge about GRPC. This project maintain room processing business API. There are three mode delivery communication services:
 * CLI
-* GRPC Gateway
+* gRPC Gateway
 * Rest API
 
 Here component in this project:
 * Golang 
 * Gorm (still using postgre sql)
-* GRPC (using libary evans for running using cli)
-* GRPC Gateway (Define end point service)
-
-
-
-
+* gRPC (using libary evans for running using cli)
+* gRPC Gateway (Define end point service)
 
 ## Prerequisites
 See Makefile to:
@@ -52,22 +48,22 @@ To generate file:
 make gen_room_swagger
 ```
 ## Running App
-### Run GRPC server
+### Run gRPC server
 ```
 start_room_grpc_server:
 	go run services/room/*.go -port 50051 -mode cli
 ```
-To generate file:
+To start gRPC server:
 ```
 make start_room_grpc_server
 ```
 
-### Run GRPC gateway
+### Run gRPC gateway
 ```
 start_room_grpc_gateway:
 	go run services/room/*.go -port 8080 -mode grpc_gateway -grpcAddress 50051
 ```
-To generate file:
+To start gRPC gateway:
 ```
 make start_room_grpc_gateway
 ```
