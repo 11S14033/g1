@@ -7,7 +7,7 @@ import (
 )
 
 type RoomRepository interface {
-	GetRoomByID(rid uint64) (room models.Room, err error)
+	GetRoomByID(ctx context.Context, rid uint64) (room models.Room, err error)
 	SaveRoom(ctx context.Context, room models.Room) (err error)
 	UpdateRoom(ctx context.Context, room models.Room) (newRoom models.Room, err error)
 	DeleteRoom(ctx context.Context, rid uint64) (err error)
