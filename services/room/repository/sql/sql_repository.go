@@ -2,6 +2,7 @@ package sql
 
 import (
 	"context"
+
 	"log"
 
 	"github.com/11s14033/g1/services/room/commons/models"
@@ -20,19 +21,20 @@ func NewGormRepository(db *gorm.DB) repository.RoomRepository {
 	}
 }
 
-func (roomRepository *gormRepository) GetRoomByID(rid uint64) (room models.Room, err error) {
-	err = roomRepository.DB.Debug().Model(&models.Room{}).Where("id = ?", rid).Take(&room).Error
-	if err != nil {
-		log.Fatalln("Error when get room from database", err)
+func (roomRepository *gormRepository) GetRoomByID(ctx context.Context, rid uint64) (room models.Room, err error) {
+	db := roomRepository.DB.Debug().Model(&models.Room{}).Where("id = ?", rid).Take(&room)
+	if db.Error != nil {
+		log.Printf("[Error when get room from database][%v]", db.Error)
 		return room, err
 	}
+
 	return room, nil
 }
 
 func (roomRepository *gormRepository) SaveRoom(ctx context.Context, room models.Room) (err error) {
 	err = roomRepository.DB.Debug().Model(&models.Room{}).Create(&room).Error
 	if err != nil {
-		log.Fatalln("Error when create room to database", err)
+		log.Printf("[Error when save room to database][%v]", err)
 		return err
 	}
 	return nil
@@ -40,7 +42,7 @@ func (roomRepository *gormRepository) SaveRoom(ctx context.Context, room models.
 func (roomRepository *gormRepository) UpdateRoom(ctx context.Context, room models.Room) (newRoom models.Room, err error) {
 	err = roomRepository.DB.Debug().Model(&models.Room{}).Update(&room).Error
 	if err != nil {
-		log.Fatalln("Error when update room to database", err)
+		log.Printf("[Error when update room to database][%v]", err)
 		return room, err
 	}
 
@@ -48,18 +50,23 @@ func (roomRepository *gormRepository) UpdateRoom(ctx context.Context, room model
 }
 
 func (roomRepository *gormRepository) DeleteRoom(ctx context.Context, rid uint64) (err error) {
-	err = roomRepository.DB.Debug().Model(&models.Room{}).Where("id = ? ", rid).Take(&models.Room{}).Delete(&models.Room{}).Error
-	if err != nil {
-		log.Fatalln("Error when delete room from database", err)
+	db := roomRepository.DB.Debug().Model(&models.Room{}).Where("id = ? ", rid).Take(&models.Room{}).Delete(&models.Room{})
+	if db.Error != nil {
+		if gorm.IsRecordNotFoundError(db.Error) {
+			log.Printf("[Error when delete room from database][%v]", db.Error)
+			return err
+		}
 		return err
 	}
+
 	return nil
 }
 
 func (roomRepository *gormRepository) GetRooms(ctx context.Context) (rooms []models.Room, err error) {
+
 	err = roomRepository.DB.Debug().Model(&models.Room{}).Limit(100).Find(&rooms).Error
 	if err != nil {
-		log.Fatalln("Error when get rooms from database", err)
+		log.Printf("[Error when get rooms from database][%v]", err)
 		return nil, err
 	}
 	return rooms, nil
