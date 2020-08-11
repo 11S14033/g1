@@ -18,12 +18,12 @@ func NewRoomUseCase(repo repository.RoomRepository) RoomUseCase {
 	}
 }
 
-func (roomUseCase *roomUseCase) GetRoomByID(rid uint64) (room models.Room, err error) {
+func (roomUseCase *roomUseCase) GetRoomByID(ctx context.Context, rid uint64) (room models.Room, err error) {
 
-	room, err = roomUseCase.roomRepository.GetRoomByID(rid)
+	room, err = roomUseCase.roomRepository.GetRoomByID(ctx, rid)
 
 	if err != nil {
-		log.Fatalln("Error [roomUseCase][GetRoomByID], when calling [roomRepository][GetRoomByID], cause", err)
+		log.Printf("[Error][roomUseCase][GetRoomByID]-[when calling][roomRepository][GetRoomByID]-[%v]", err)
 	}
 	return room, nil
 }
@@ -31,7 +31,7 @@ func (roomUseCase *roomUseCase) SaveRoom(ctx context.Context, room models.Room) 
 
 	err = roomUseCase.roomRepository.SaveRoom(ctx, room)
 	if err != nil {
-		log.Fatalln("Error [roomUseCase][SaveRoom], when calling [roomRepository][SaveRoom], cause", err)
+		log.Printf("[Error][roomUseCase][SaveRoom]-[when calling][roomRepository][SaveRoom]-[%v]", err)
 	}
 	return nil
 }
@@ -39,21 +39,21 @@ func (roomUseCase *roomUseCase) UpdateRoom(ctx context.Context, room models.Room
 
 	newRoom, err = roomUseCase.roomRepository.UpdateRoom(ctx, room)
 	if err != nil {
-		log.Fatalln("Error [roomUseCase][UpdateRoom], when calling [roomRepository][UpdateRoom], cause", err)
+		log.Printf("[Error][roomUseCase][UpdateRoom]-[when calling][roomRepository][UpdateRoom]-[%v]", err)
 	}
 	return newRoom, nil
 }
 func (roomUseCase *roomUseCase) DeleteRoom(ctx context.Context, rid uint64) (err error) {
 	err = roomUseCase.roomRepository.DeleteRoom(ctx, rid)
 	if err != nil {
-		log.Fatalln("Error [roomUseCase][DeleteRoom], when calling [roomRepository][DeleteRoom], cause", err)
+		log.Printf("[Error][roomUseCase][DeleteRoom]-[when calling][roomRepository][DeleteRoom]-[%v]", err)
 	}
 	return nil
 }
 func (roomUseCase *roomUseCase) GetRooms(ctx context.Context) (rooms []models.Room, err error) {
 	rooms, err = roomUseCase.roomRepository.GetRooms(ctx)
 	if err != nil {
-		log.Fatalln("Error [roomUseCase][GetRooms], when calling [roomRepository][GetRooms], cause", err)
+		log.Printf("[Error][roomUseCase][GetRooms]-[when calling][roomRepository][GetRooms]-[%v]", err)
 	}
 	return rooms, nil
 }
