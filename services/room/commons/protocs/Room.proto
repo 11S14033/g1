@@ -65,6 +65,7 @@ service roomService{
     rpc SaveRoom(CreateRoomRequest) returns(CreateRoomResponse){
         option (google.api.http)={
             post:"/v1/room"
+            body:"*"
            
         };
     };
