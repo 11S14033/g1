@@ -11,39 +11,16 @@ Here component in this project:
 * Gorm (still using postgre sql)
 * gRPC (using libary evans for running using cli)
 * gRPC Gateway (Define end point service)
-
+* gorilla mux
 ## Prerequisites
-See Makefile to:
+See Makefile for
 
-### Generate [filename].pb.go and [filename].pb.gw.go From Proto File
-```
-gen_room_pb:
-	protoc \
-	-I /usr/local/bin \
-	-I. \
-	-I${GOPATH}/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
-	-I${GOPATH}/src/github.com/grpc-ecosystem/grpc-gateway \
-	--grpc-gateway_out=logtostderr=true:. \
-	--go_out=plugins=grpc:. services/room/commons/protocs/Room.proto
-```
-To generate file:
+Generate file pb
 ```
 make gen_room_pb
 ```
 
-###  Generate Swagger File For Documentation API.
-```
-gen_room_swagger:
-	protoc \
-	-I /usr/local/bin \
-	-I. \
-	-I${GOPATH}/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
-	-I${GOPATH}/src/github.com/grpc-ecosystem/grpc-gateway \
-	--grpc-gateway_out=logtostderr=true:pb \
-	--swagger_out=allow_merge=true,merge_file_name=roomapi:./swagger \
-	--go_out=plugins=grpc:pkg services/room/commons/protocs/Room.proto
-```
-To generate file:
+To generate swagger file:
 ```
 make gen_room_swagger
 ```
@@ -58,14 +35,24 @@ To start gRPC server:
 make start_room_grpc_server
 ```
 
-### Run gRPC gateway
+### Run gRPC gateway server
 ```
-start_room_grpc_gateway:
+start_room_grpc_gateway_server:
 	go run services/room/*.go -port 8080 -mode grpc_gateway -grpcAddress 50051
 ```
-To start gRPC gateway:
+To start gRPC gateway server:
 ```
-make start_room_grpc_gateway
+make start_room_grpc_gateway_server
+```
+
+### Run rest server
+```
+start_room_rest_server:
+	go run services/room/*.go -port 8080 -mode grpc_gateway -grpcAddress 50051
+```
+To start rest server:
+```
+make start_room_rest_server
 ```
 
 ## End Point
