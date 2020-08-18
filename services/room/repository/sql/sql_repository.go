@@ -40,7 +40,7 @@ func (roomRepository *gormRepository) SaveRoom(ctx context.Context, room models.
 	return nil
 }
 func (roomRepository *gormRepository) UpdateRoom(ctx context.Context, room models.Room) (newRoom models.Room, err error) {
-	err = roomRepository.DB.Debug().Model(&models.Room{}).Update(&room).Error
+	err = roomRepository.DB.Debug().Model(&models.Room{}).Update(&room).Take(&room).Error
 	if err != nil {
 		log.Printf("[Error when update room to database][%v]", err)
 		return room, err
