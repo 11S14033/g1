@@ -1,4 +1,4 @@
-#==================================================Room#==================================================#
+#==================================================Room=================================================#
 gen_room_pb:
 	protoc \
 	-I /usr/local/bin \
@@ -19,9 +19,14 @@ gen_room_swagger:
 	--go_out=plugins=grpc:pkg services/room/commons/protocs/Room.proto
 
 
+
+## when choose grpc delivery, start grpc server and grpc server gateway
 start_room_grpc_server:
 	go run services/room/*.go -port 50051 -mode cli
 
-start_room_grpc_gateway:
+start_room_grpc_gateway_server:
 	go run services/room/*.go -port 8080 -mode grpc_gateway -grpcAddress 50051
 
+## when choose rest delivery, start grpc server and grpc server gateway
+start_room_rest_server:
+	go run services/room/*.go -port 8080 -mode rest 
