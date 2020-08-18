@@ -22,10 +22,20 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/protocsCreateRoomResponse"
+              "$ref": "#/definitions/protocsRoom"
             }
           }
         },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/protocsRoom"
+            }
+          }
+        ],
         "tags": [
           "roomService"
         ]
@@ -36,7 +46,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/protocsUpdateRoomByIDResponse"
+              "$ref": "#/definitions/protocsRoom"
             }
           }
         },
@@ -46,7 +56,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/protocsUpdateRoomByIDRequest"
+              "$ref": "#/definitions/protocsRoom"
             }
           }
         ],
@@ -62,7 +72,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/protocsGetRoomByIDResponse"
+              "$ref": "#/definitions/protocsRoom"
             }
           }
         },
@@ -110,7 +120,7 @@
           "200": {
             "description": "A successful response.(streaming responses)",
             "schema": {
-              "$ref": "#/x-stream-definitions/protocsGetRoomsResponse"
+              "$ref": "#/x-stream-definitions/protocsRoom"
             }
           }
         },
@@ -133,36 +143,12 @@
         }
       }
     },
-    "protocsCreateRoomResponse": {
-      "type": "object",
-      "properties": {
-        "room": {
-          "$ref": "#/definitions/protocsRoom"
-        }
-      }
-    },
     "protocsDeleteRoomResponse": {
       "type": "object",
       "properties": {
         "room_id": {
           "type": "string",
           "format": "uint64"
-        }
-      }
-    },
-    "protocsGetRoomByIDResponse": {
-      "type": "object",
-      "properties": {
-        "room": {
-          "$ref": "#/definitions/protocsRoom"
-        }
-      }
-    },
-    "protocsGetRoomsResponse": {
-      "type": "object",
-      "properties": {
-        "room": {
-          "$ref": "#/definitions/protocsRoom"
         }
       }
     },
@@ -173,7 +159,7 @@
           "type": "string",
           "format": "uint64"
         },
-        "roomName": {
+        "room_name": {
           "type": "string"
         },
         "addres": {
@@ -185,7 +171,7 @@
         "province": {
           "type": "string"
         },
-        "descriptions": {
+        "description": {
           "type": "string"
         },
         "owner": {
@@ -200,22 +186,6 @@
         },
         "updatedAt": {
           "type": "string"
-        }
-      }
-    },
-    "protocsUpdateRoomByIDRequest": {
-      "type": "object",
-      "properties": {
-        "room": {
-          "$ref": "#/definitions/protocsRoom"
-        }
-      }
-    },
-    "protocsUpdateRoomByIDResponse": {
-      "type": "object",
-      "properties": {
-        "room": {
-          "$ref": "#/definitions/protocsRoom"
         }
       }
     },
@@ -246,17 +216,17 @@
     }
   },
   "x-stream-definitions": {
-    "protocsGetRoomsResponse": {
+    "protocsRoom": {
       "type": "object",
       "properties": {
         "result": {
-          "$ref": "#/definitions/protocsGetRoomsResponse"
+          "$ref": "#/definitions/protocsRoom"
         },
         "error": {
           "$ref": "#/definitions/runtimeStreamError"
         }
       },
-      "title": "Stream result of protocsGetRoomsResponse"
+      "title": "Stream result of protocsRoom"
     }
   }
 }
