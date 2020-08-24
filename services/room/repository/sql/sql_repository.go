@@ -25,7 +25,7 @@ func (roomRepository *gormRepository) GetRoomByID(ctx context.Context, rid uint6
 	db := roomRepository.DB.Debug().Model(&models.Room{}).Where("id = ?", rid).Take(&room)
 	if db.Error != nil {
 		log.Printf("[Error when get room from database][%v]", db.Error)
-		return room, err
+		return room, db.Error
 	}
 
 	return room, nil
@@ -40,7 +40,7 @@ func (roomRepository *gormRepository) SaveRoom(ctx context.Context, room models.
 	return nil
 }
 func (roomRepository *gormRepository) UpdateRoom(ctx context.Context, room models.Room) (newRoom models.Room, err error) {
-	err = roomRepository.DB.Debug().Model(&models.Room{}).Update(&room).Error
+	err = roomRepository.DB.Debug().Model(&models.Room{}).Update(&room).Take(&room).Error
 	if err != nil {
 		log.Printf("[Error when update room to database][%v]", err)
 		return room, err
@@ -50,13 +50,14 @@ func (roomRepository *gormRepository) UpdateRoom(ctx context.Context, room model
 }
 
 func (roomRepository *gormRepository) DeleteRoom(ctx context.Context, rid uint64) (err error) {
+
 	db := roomRepository.DB.Debug().Model(&models.Room{}).Where("id = ? ", rid).Take(&models.Room{}).Delete(&models.Room{})
 	if db.Error != nil {
 		if gorm.IsRecordNotFoundError(db.Error) {
 			log.Printf("[Error when delete room from database][%v]", db.Error)
-			return err
+			return db.Error
 		}
-		return err
+		return db.Error
 	}
 
 	return nil

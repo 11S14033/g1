@@ -8,11 +8,11 @@ option go_package="services/room/commons/pb";
 
 message Room{
     uint64 id=1;
-    string roomName=2;
+    string room_name=2;
     string addres=3;
     string city=4;
     string province=5;
-    string descriptions=6;
+    string description=6;
     string owner=7;
     uint32 type=8;
     string createdAt=9;
@@ -20,20 +20,8 @@ message Room{
 
 }
 
-message CreateRoomRequest{
-    Room room=1;
-}
-
-message CreateRoomResponse{
-    Room room=1;
-}
-
 message GetRoomsRequest{
 
-}
-
-message GetRoomsResponse{
-    Room room=1;
 }
 
 message GetRoomByIDRequest{
@@ -41,14 +29,6 @@ message GetRoomByIDRequest{
 }
 
 message GetRoomByIDResponse{
-    Room room=1;
-}
-
-message UpdateRoomByIDRequest{
-    Room room=1;
-}
-
-message UpdateRoomByIDResponse{
     Room room=1;
 }
 
@@ -62,24 +42,24 @@ message DeleteRoomResponse{
 
 
 service roomService{
-    rpc SaveRoom(CreateRoomRequest) returns(CreateRoomResponse){
+    rpc SaveRoom(Room) returns(Room){
         option (google.api.http)={
             post:"/v1/room"
             body:"*"
            
         };
     };
-    rpc GetRooms(GetRoomsRequest) returns (stream GetRoomsResponse){
+    rpc GetRooms(GetRoomsRequest) returns (stream Room){
         option (google.api.http)={
             get:"/v1/rooms"
         };
     };
-    rpc GetRoomByID(GetRoomByIDRequest) returns (GetRoomByIDResponse){
+    rpc GetRoomByID(GetRoomByIDRequest) returns (Room){
         option (google.api.http)={
             get:"/v1/room/{room_id}"
         };
     } ;
-    rpc UpdateRoomByID(UpdateRoomByIDRequest) returns (UpdateRoomByIDResponse){
+    rpc UpdateRoomByID(Room) returns (Room){
         option (google.api.http)={
             put:"/v1/room"
             body:"*"
